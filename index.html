@@ -277,6 +277,88 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-2021-2-23-io" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2021/02/23/2021-2-23-io/" class="article-date">
+      <time datetime="2021-02-23T09:22:21.000Z" itemprop="datePublished">2021-02-23</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a  class="article-title" href="/2021/02/23/2021-2-23-io/">io</a>
+    </h1>
+  
+
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="IO的种类"><a href="#IO的种类" class="headerlink" title="IO的种类"></a>IO的种类</h2><h4 id="1-阻塞式IO"><a href="#1-阻塞式IO" class="headerlink" title="1. 阻塞式IO"></a>1. 阻塞式IO</h4><p>用户调用recv函数，进入内核态，如果数据没有准备好，则进入阻塞状态，当内核将数据准备好，再复制到用户态的缓存区后，告知用户数据到达。</p>
+<ul>
+<li>优点：简单</li>
+<li>缺点：效率低，会阻塞</li>
+</ul>
+<h4 id="2-非阻塞式IO"><a href="#2-非阻塞式IO" class="headerlink" title="2. 非阻塞式IO"></a>2. 非阻塞式IO</h4><p>用户调用recv函数，进入内核态，如果内核没有准备好数据，则直接返回，如果内核准备好数据，将数据复制到用户态的缓存区后，告知用户数据到达。</p>
+<ul>
+<li>优点：不会阻塞</li>
+<li>缺点：用户等待数据需要不断循环，并进行用户态与内核态的切换，占用CPU资源较高</li>
+<li>与异步IO的比较，非阻塞式IO虽然在数据没有到达时不会阻塞，但是在数据到达时，需要等待数据从内核态拷贝到用户态，故期间存在一定的阻塞时间</li>
+</ul>
+<h4 id="3-异步IO"><a href="#3-异步IO" class="headerlink" title="3. 异步IO"></a>3. 异步IO</h4><p>用户调用系统api进入内核态后直接返回，如果内核态准备好数据，将数据拷贝到用户态后，告知用户数据已经到达。</p>
+<ul>
+<li>优点：完全没有阻塞</li>
+<li>缺点：编程更复杂</li>
+<li>与非阻塞式IO比较：异步IO只有在内核将数据准备好，并复制到用户态后，才会通知用户，用户完全不需要等待</li>
+</ul>
+<h4 id="4-IO复用型"><a href="#4-IO复用型" class="headerlink" title="4. IO复用型"></a>4. IO复用型</h4><p>用户调用select进入内核态，此时如果没有数据，则也会阻塞。当数据到达时，select函数会进行返回，用户收到通知后调用recv函数进入内核态，操作系统将内核数据拷贝到用户态后返回</p>
+<ul>
+<li>优点：可以多路IO一起使用，效率高，减少了用户态和内核态的频繁切换</li>
+</ul>
+<h4 id="5-信号驱动型IO"><a href="#5-信号驱动型IO" class="headerlink" title="5. 信号驱动型IO"></a>5. 信号驱动型IO</h4><p>用户调用establish signal handler，进入内核态，如果内核没有准备好数据，则直接返回，当数据到达时，会通过回调告知用户数据已经到达，然后用户调用recv函数，进入内核态，然后将数据拷贝到用户态后返回</p>
+<ul>
+<li>与异步IO的比较：信号驱动型IO在内核数据到达后立即通知用户，用户要调用recvfrom函数进入内核态，等待数据从内核态复制到用户态后再返回</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-2021-2-7-testmd" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
